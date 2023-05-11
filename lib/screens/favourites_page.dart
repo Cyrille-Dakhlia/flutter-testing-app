@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:testing_app_001/models/favourites.dart';
+import 'package:testing_app_001/screens/home_page.dart';
 
 class FavouritesPage extends StatelessWidget {
   const FavouritesPage({super.key});
@@ -11,8 +14,45 @@ class FavouritesPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Favourites'),
       ),
-      body: const Center(
-        child: Text('Hi! Favourites Page!'),
+      body: Consumer<Favourites>(
+        builder: (context, value, child) {
+          return ListView.builder(
+            itemCount: value.items.length,
+            itemBuilder: (context, index) =>
+                FavouritesItemTile(value.items[index]),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class FavouritesItemTile extends StatelessWidget {
+  const FavouritesItemTile(this.itemNumber, {super.key});
+
+  final int itemNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        'Item $itemNumber',
+      ),
+      leading: CircleAvatar(
+        backgroundColor: Colors.primaries[itemNumber % Colors.primaries.length],
+      ),
+      trailing: IconButton(
+        icon: const Icon(Icons.close),
+        onPressed: () {
+          context.read<Favourites>().remove(itemNumber);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Removed from favourites.'),
+              duration: Duration(seconds: 1),
+            ),
+          );
+        },
       ),
     );
   }

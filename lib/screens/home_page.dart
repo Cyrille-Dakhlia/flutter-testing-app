@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:testing_app_001/models/favourites.dart';
 import 'favourites_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -43,14 +45,30 @@ class ItemTile extends StatelessWidget {
     return ListTile(
       title: Text(
         'Item $itemNumber',
-        key: Key('item_$itemNumber'),
       ),
       leading: CircleAvatar(
         backgroundColor: Colors.primaries[itemNumber % Colors.primaries.length],
       ),
-      trailing: IconButton(
-        onPressed: () => print('Favourite!'),
-        icon: const Icon(Icons.favorite_border),
+      trailing: Consumer<Favourites>(
+        builder: (context, value, _) => IconButton(
+          icon: Icon(!value.items.contains(itemNumber)
+              ? Icons.favorite_border
+              : Icons.favorite),
+          onPressed: () {
+            !value.items.contains(itemNumber)
+                ? value.add(itemNumber)
+                : value.remove(itemNumber);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(value.items.contains(itemNumber)
+                    ? 'Added to favourites.'
+                    : 'Removed from favourites.'),
+                duration: const Duration(seconds: 1),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
