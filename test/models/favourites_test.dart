@@ -7,17 +7,27 @@ void main() {
     () {
       var favourites = Favourites();
 
-      test('A new item should be added', () {
+      test('should add a new item', () {
+        // Given
         var item = 3;
+
+        // When
         favourites.add(item);
+
+        // Then
         expect(favourites.items.contains(item), true);
       });
 
-      test('An item should be removed', () {
+      test('should remove an item', () {
+        // Given
         var item = 42;
         favourites.add(item);
         expect(favourites.items.contains(item), true);
+
+        // When
         favourites.remove(item);
+
+        // Then
         expect(favourites.items.contains(item), false);
       });
     },
