@@ -45,12 +45,14 @@ class ItemTile extends StatelessWidget {
     return ListTile(
       title: Text(
         'Item $itemNumber',
+        key: Key('text_$itemNumber'),
       ),
       leading: CircleAvatar(
         backgroundColor: Colors.primaries[itemNumber % Colors.primaries.length],
       ),
       trailing: Consumer<Favourites>(
         builder: (context, value, _) => IconButton(
+          key: Key('icon_$itemNumber'),
           icon: Icon(!value.items.contains(itemNumber)
               ? Icons.favorite_border
               : Icons.favorite),

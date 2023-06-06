@@ -3,7 +3,7 @@ import 'package:testing_app_001/models/favourites.dart';
 
 void main() {
   group(
-    'Testing App Provider',
+    'Testing App Provider...',
     () {
       var favourites = Favourites();
 

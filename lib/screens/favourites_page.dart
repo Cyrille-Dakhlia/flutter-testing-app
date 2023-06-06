@@ -36,11 +36,13 @@ class FavouritesItemTile extends StatelessWidget {
     return ListTile(
       title: Text(
         'Item $itemNumber',
+        key: Key('favourites_text_$itemNumber'),
       ),
       leading: CircleAvatar(
         backgroundColor: Colors.primaries[itemNumber % Colors.primaries.length],
       ),
       trailing: IconButton(
+        key: Key('remove_icon_$itemNumber'),
         icon: const Icon(Icons.close),
         onPressed: () {
           context.read<Favourites>().remove(itemNumber);
